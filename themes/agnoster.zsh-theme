@@ -54,6 +54,7 @@ esac
   # escape sequence with a single literal character.
   # Do not change this! Do not make it '\u2b80'; that is the old, wrong code point.
   SEGMENT_SEPARATOR=$'\ue0b0'
+  INTERNAL_SEGMENT_SEPARATOR=$'\ue0b1'
 }
 
 # Begin a segment
@@ -242,6 +243,27 @@ prompt_aws() {
   esac
 }
 
+
+#Openshift Profile:
+typeset -A kubectx_mapping
+
+prompt_oc() {
+  local current_ctx
+  local cctx="$(oc config current-context)"
+  for key val in "${(@kv)kubectx_mapping}"; do
+    if [[ "$cctx" == *${~key}* ]]; then
+      current_ctx=`echo $cctx | sed -E "s|^([^/]+)/.*$val.*/([^/]+)$|\1$INTERNAL_SEGMENT_SEPARATOR\2$INTERNAL_SEGMENT_SEPARATOR\3|g"`
+    fi
+  done
+
+#  if [[ "$cctx" == *"-crc-"* ]]; then
+#    local current_ctx=`echo $cctx | sed -E "s|^([^/]+)/.*-crc-.*/([^/]+)$|\1${INTERNAL_SEGMENT_SEPARATOR}CRC$INTERNAL_SEGMENT_SEPARATOR\2|g"`
+#  else  
+#    local current_ctx=`echo $cctx | sed -E "s|^([^/]+)/.*api-(.*)-openshift.*/([^/]+)$|\1$INTERNAL_SEGMENT_SEPARATOR\2$INTERNAL_SEGMENT_SEPARATOR\3|g"`
+#  fi
+  prompt_segment red white "${current_ctx:-$cctx}"
+}
+
 ## Main prompt
 build_prompt() {
   RETVAL=$?
@@ -253,7 +275,9 @@ build_prompt() {
   prompt_git
   prompt_bzr
   prompt_hg
+  prompt_oc
   prompt_end
 }
 
-PROMPT='%{%f%b%k%}$(build_prompt) '
+PROMPT='%{%f%b%k%}$(build_prompt)
+$ '
