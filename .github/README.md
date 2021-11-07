@@ -11,8 +11,8 @@ kubectx_mapping[api-*-openshift]='api-(.*)-openshift
 ```
 
 On the left use a simple pattern, on the right use a regex with a capturing group, which is the final name showed for your cluster.
-The first line of the above example turn your crc cluster name in just "crc".
-The second line of the above example turn a cluster name called, for example, "api-mycluster-openshift", just in ""mycluster".
+The first line of the above example turn your crc cluster name to just "crc".
+The second line of the above example turn a cluster name called, for example, "api-mycluster-openshift", just to ""mycluster".
 
 ![How the theme looks like](./screenshot.png)
 
