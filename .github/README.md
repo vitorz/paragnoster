@@ -1,7 +1,7 @@
 # Paragnoster
 This is a fork of agnoster theme from [oh my zsh](https://github.com/ohmyzsh/ohmyzsh).
 
-This new version of **agnoster** theme supports also Openshift info.
+This new version of **agnoster** theme supports also Openshift info(i.e.: project/namespace, cluster simple name, user).
 
 You can configure how your cluster name can be mapped to a different *(shorter)* name. To do this, modify your .zshrc file, in this way:
 after the line with `source $ZSH/oh-my-zsh.sh` write a mapping for every pattern you want to customize, e.g.:
