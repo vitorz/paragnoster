@@ -252,15 +252,9 @@ prompt_oc() {
   local cctx="$(oc config current-context)"
   for key val in "${(@kv)kubectx_mapping}"; do
     if [[ "$cctx" == *${~key}* ]]; then
-      current_ctx=`echo $cctx | sed -E "s|^([^/]+)/.*$val.*/([^/]+)$|\1$INTERNAL_SEGMENT_SEPARATOR\2$INTERNAL_SEGMENT_SEPARATOR\3|g"`
+      current_ctx=`echo $cctx | sed -E "s|^([^/]+)/.*$val.*/([^/]+)$|\1 %B$INTERNAL_SEGMENT_SEPARATOR%b \2 %B$INTERNAL_SEGMENT_SEPARATOR%b \3|g"`
     fi
   done
-
-#  if [[ "$cctx" == *"-crc-"* ]]; then
-#    local current_ctx=`echo $cctx | sed -E "s|^([^/]+)/.*-crc-.*/([^/]+)$|\1${INTERNAL_SEGMENT_SEPARATOR}CRC$INTERNAL_SEGMENT_SEPARATOR\2|g"`
-#  else  
-#    local current_ctx=`echo $cctx | sed -E "s|^([^/]+)/.*api-(.*)-openshift.*/([^/]+)$|\1$INTERNAL_SEGMENT_SEPARATOR\2$INTERNAL_SEGMENT_SEPARATOR\3|g"`
-#  fi
   prompt_segment red white "${current_ctx:-$cctx}"
 }
 
