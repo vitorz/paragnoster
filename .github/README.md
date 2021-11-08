@@ -15,7 +15,7 @@ Both pattern and regex need to match just a substring of the whole cluster name.
 The first line of the above example turn your crc cluster name to just "crc".
 The second line of the above example turn a cluster name, let's say, "api-mycluster-openshift", just to "mycluster".
 
-Last thing to say: i added a new line to the prompt, you can see even this from the following image. 
+Last thing to say: i added a new line to the prompt, you can see also this from the following image. 
 
 ![How the theme looks like](./screenshot.png)
 
