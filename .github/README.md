@@ -22,4 +22,4 @@ Last thing to say: i added a new line to the prompt, you can see also this from 
 ---
 
 ## License
-Paragnoster is released under the [MIT license](https://github.com/vitorz/paragnoster/blob/master/LICENSE.txt).
+Paragnoster is released under the [MIT license](https://github.com/vitorz/paragnoster/blob/master/.github/LICENSE.txt).
