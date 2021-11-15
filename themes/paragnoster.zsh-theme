@@ -31,7 +31,7 @@
 
 ### Segment drawing
 # A few utility functions to make it easy and re-usable to draw segmented prompts
-
+PARAGNOSTER_CURRENT_CONTEXT=''
 CURRENT_BG='NONE'
 
 case ${SOLARIZED_THEME:-dark} in
@@ -247,15 +247,24 @@ prompt_aws() {
 #Openshift Profile:
 typeset -A kubectx_mapping
 
+PARAGNOSTER_CURRENT_CONTEXT=''
+
 prompt_oc() {
   local current_ctx
-  local cctx="$(oc config current-context)"
   for key val in "${(@kv)kubectx_mapping}"; do
-    if [[ "$cctx" == *${~key}* ]]; then
-      current_ctx=`echo $cctx | sed -E "s|^([^/]+)/.*$val.*/([^/]+)$|\1 %B$INTERNAL_SEGMENT_SEPARATOR%b \2 %B$INTERNAL_SEGMENT_SEPARATOR%b \3|g"`
+    if [[ "$PARAGNOSTER_CURRENT_CONTEXT" == *${~key}* ]]; then
+      current_ctx=`echo $PARAGNOSTER_CURRENT_CONTEXT | sed -E "s|^([^/]+)/.*$val.*/([^/]+)$|\1 %B$INTERNAL_SEGMENT_SEPARATOR%b \2 %B$INTERNAL_SEGMENT_SEPARATOR%b \3|g"`
     fi
   done
-  prompt_segment red white "${current_ctx:-$cctx}"
+  prompt_segment red white "${current_ctx:-$PARAGNOSTER_CURRENT_CONTEXT}"
+}
+
+precmd() {
+  local cctx="$(oc config current-context)"
+  if [[ $PARAGNOSTER_CURRENT_CONTEXT != '' && $PARAGNOSTER_CURRENT_CONTEXT != $cctx ]]; then
+    pgrep zsh | grep -v "$$" | xargs -i kill -10 {}
+  fi
+  PARAGNOSTER_CURRENT_CONTEXT="$cctx"
 }
 
 ## Main prompt
@@ -272,6 +281,13 @@ build_prompt() {
   prompt_oc
   prompt_end
 }
+
+TRAPUSR1() {
+  PARAGNOSTER_CURRENT_CONTEXT="$(oc config current-context)"
+  #zle reset-prompt
+  return $(( 128 + $1 ))
+}
+
 
 PROMPT='%{%f%b%k%}$(build_prompt)
 $ '

@@ -15,9 +15,14 @@ Both pattern and regex need to match just a substring of the whole cluster name.
 The first line of the above example turn your crc cluster name to just "crc".
 The second line of the above example turn a cluster name, let's say, "api-mycluster-openshift", just to "mycluster".
 
-Last thing to say: i added a new line to the prompt, you can see also this from the following image. 
+Compared to the original theme, a new line is added to the prompt, you can see also this from the following image. 
 
 ![How the theme looks like](./screenshot.png)
+
+
+If you have multiple zsh instances opened and you change something in the openshift context from one of them, also the rest of instances will show the new information:
+
+![How the context changes are propagated](./screenshot_cp.gif)
 
 ---
 
