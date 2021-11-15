@@ -20,7 +20,7 @@ Compared to the original theme, a new line is added to the prompt, you can see a
 ![How the theme looks like](./screenshot.png)
 
 
-If you have multiple zsh instances opened and you change something in the openshift context from one of them, also the rest of instances will show the new information:
+If you have multiple zsh instances open and you change something in the openshift context from one of them, also the rest of instances will show the new information:
 
 ![How the context changes are propagated](./screenshot_cp.gif)
 
