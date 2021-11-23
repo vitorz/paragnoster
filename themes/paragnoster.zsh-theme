@@ -262,7 +262,7 @@ prompt_oc() {
 precmd() {
   local cctx="$(oc config current-context)"
   if [[ $PARAGNOSTER_CURRENT_CONTEXT != '' && $PARAGNOSTER_CURRENT_CONTEXT != $cctx ]]; then
-    pgrep zsh | grep -v "$$" | xargs -i kill -10 {}
+    pgrep ^zsh$ | grep -v "$$" | xargs -i kill -10 {}
   fi
   PARAGNOSTER_CURRENT_CONTEXT="$cctx"
 }
@@ -285,6 +285,7 @@ build_prompt() {
 TRAPUSR1() {
   PARAGNOSTER_CURRENT_CONTEXT="$(oc config current-context)"
   #zle reset-prompt
+  echo -e "\033[2A"
   return $(( 128 + $1 ))
 }
 
