@@ -250,6 +250,7 @@ typeset -A kubectx_mapping
 PARAGNOSTER_CURRENT_CONTEXT=''
 
 prompt_oc() {
+  (( $+commands[oc] )) || return
   local current_ctx
   for key val in "${(@kv)kubectx_mapping}"; do
     if [[ "$PARAGNOSTER_CURRENT_CONTEXT" == *${~key}* ]]; then
@@ -260,6 +261,7 @@ prompt_oc() {
 }
 
 precmd() {
+  (( $+commands[oc] )) || return
   local cctx="$(oc config current-context)"
   if [[ $PARAGNOSTER_CURRENT_CONTEXT != '' && $PARAGNOSTER_CURRENT_CONTEXT != $cctx ]]; then
     pgrep ^zsh$ | grep -v "$$" | xargs -i kill -10 {}
