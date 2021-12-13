@@ -285,9 +285,9 @@ build_prompt() {
 }
 
 TRAPUSR1() {
+  #echo -e "\033[2A"
   PARAGNOSTER_CURRENT_CONTEXT="$(oc config current-context)"
   #zle reset-prompt
-  echo -e "\033[2A"
   return $(( 128 + $1 ))
 }
 
